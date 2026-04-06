@@ -27,7 +27,7 @@ export default function StudentDashboard() {
       }
 
       try {
-        const res = await fetch(`${API_BASE_URL}/api/logout`, {
+        const res = await fetch(`${API_BASE_URL}/progress/progress`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
