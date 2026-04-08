@@ -8,7 +8,7 @@
   padding-bottom: 80px;
   font-family: "Outfit", sans-serif;
   background: linear-gradient(135deg, #f5f9ff 0%, #eef3ff 40%, #f8fbff 100%);
-  overflow-y: auto; /* Allow container to scroll */
+  overflow-y: visible; /* Allow container to scroll */
   height: 100%;
 }
 
