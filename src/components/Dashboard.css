@@ -129,8 +129,8 @@
 .dashboard-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 40px clamp(16px, 5vw, 48px) 120px;
-  padding-bottom: max(120px, env(safe-area-inset-bottom));
+  padding: 40px clamp(16px, 5vw, 48px) 80px;
+  padding-bottom: max(80px, env(safe-area-inset-bottom));
   box-sizing: border-box;
   font-family: 'Outfit', sans-serif;
 }
