@@ -18,10 +18,30 @@
   text-size-adjust: 100%;
 }
 
-.dashboard-page-wrapper::-webkit-scrollbar { width: 6px; }
-.dashboard-page-wrapper::-webkit-scrollbar-track { background: transparent; }
-.dashboard-page-wrapper::-webkit-scrollbar-thumb { background: #0066ff; border-radius: 20px; }
-.dashboard-page-wrapper::-webkit-scrollbar-thumb:hover { background: #0052cc; }
+::-webkit-scrollbar { 
+  width: 6px; 
+}
+
+/* Target the track (the background) */
+::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+
+/* Target the draggable thumb */
+::-webkit-scrollbar-thumb { 
+  background: #0066ff; 
+  border-radius: 20px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+  background: #0052cc; 
+}
+
+/* For Firefox support (it doesn't use -webkit) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0066ff transparent;
+}
 
 /* =======================
    HEADER / NAVBAR
