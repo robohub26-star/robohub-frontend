@@ -110,6 +110,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  margin-left: 170px;
 }
 
 .btn-back-home:hover {
