@@ -17,7 +17,6 @@ export default function StudentDashboard() {
   );
 
   useEffect(() => {
-    // fetch function so we can call it on mount and on progressUpdate events
     const fetchProgressData = async () => {
       const authToken = sessionStorage.getItem("token") || token;
 
@@ -46,27 +45,47 @@ export default function StudentDashboard() {
         setCompletedDays(data.completedDays || 0);
         setTestsPassed(data.testsPassed || 0);
         setAverageScore(data.averageScore || "0%");
-        // Only update fullName if backend returned one; otherwise keep stored value
         if (data.fullName) setFullName(data.fullName);
       } catch (err) {
         console.error("Failed to fetch progress:", err);
       }
     };
 
-    // initial load
     fetchProgressData();
 
-    // Listen for updates triggered elsewhere (e.g., after completing a test)
     const handler = () => fetchProgressData();
     window.addEventListener("progressUpdate", handler);
     return () => window.removeEventListener("progressUpdate", handler);
-  }, [navigate, token]); // token included in dependency array
+  }, [navigate, token]);
+
+  const handleLogout = async () => {
+    const authToken = sessionStorage.getItem("token") || token;
+
+    if (authToken) {
+      try {
+        await fetch(`${API_BASE_URL}/api/logout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+      } catch (err) {
+        console.error("Logout API failed:", err);
+      }
+    }
+
+    setToken(null);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("fullName");
+    sessionStorage.removeItem("role");
+    navigate("/");
+  };
 
   return (
     <div className="dashboard-page-wrapper">
 
       {/* Navbar */}
-      {/* 2. Renamed all header classes so App.css doesn't break them */}
       <div className="dashboard-header-wrapper">
         <header className="dashboard-header">
           <div className="dashboard-nav-container">
@@ -76,33 +95,9 @@ export default function StudentDashboard() {
               </div>
               <div className="dashboard-auth-buttons">
                 <span className="student-name">{fullName}</span>
-                <button
-                  className="button-secondary"
-                  onClick={async () => {
-                    const authToken = sessionStorage.getItem("token") || token;
-
-                    if (authToken) {
-                      try {
-                        await fetch(`${API_BASE_URL}/api/logout`, {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${authToken}`,
-                          },
-                        });
-                      } catch (err) {
-                        console.error("Logout API failed:", err);
-                      }
-                    }
-
-                    setToken(null);
-                    sessionStorage.removeItem("token");
-                    sessionStorage.removeItem("fullName");
-                    sessionStorage.removeItem("role");
-                    navigate("/");
-                  }}
-                >
-                  <i className="fas fa-sign-out-alt"></i> Logout
+                <button className="button-secondary" onClick={handleLogout}>
+                  <i className="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
                 </button>
               </div>
             </nav>
@@ -112,7 +107,9 @@ export default function StudentDashboard() {
 
       {/* Dashboard Content */}
       <div className="dashboard-container">
-        <h1 className="dashboard-title">Student <span>Dashboard</span></h1>
+        <h1 className="dashboard-title">
+          Student <span>Dashboard</span>
+        </h1>
         <p className="dashboard-subtitle">
           Track your progress and continue learning
         </p>
@@ -138,10 +135,7 @@ export default function StudentDashboard() {
           <div className="stat-card purple">
             <i className="fas fa-award stat-icon"></i>
             <div className="stat-text">
-              <h2>
-                {averageScore}
-                {/* <small>(out of {MAX_SCORE_PER_DAY})</small> */}
-              </h2>
+              <h2>{averageScore}</h2>
               <p>Average Score</p>
             </div>
           </div>
@@ -151,22 +145,11 @@ export default function StudentDashboard() {
             <div className="stat-text">
               <div style={{ maxHeight: "70px", overflowY: "auto" }}>
                 {Object.entries(progress).map(([day, info]) => (
-                  <div
-                    key={day}
-                    style={{ display: "inline-block", width: "100%" }}
-                  >
-                    <h3
-                      style={{ display: "inline-block", marginRight: "20px" }}
-                    >
+                  <div key={day} style={{ display: "inline-block", width: "100%" }}>
+                    <h3 style={{ display: "inline-block", marginRight: "20px" }}>
                       Day {day}:
                     </h3>
-                    <div
-                      style={{
-                        display: "inline-block",
-                        position: "relative",
-                        top: "8px",
-                      }}
-                    >
+                    <div style={{ display: "inline-block", position: "relative", top: "8px" }}>
                       <p>Status: {info.completed ? "Completed" : "Pending"}</p>
                       <p>Score: {info.completed ? `${info.score}` : "-"}</p>
                     </div>
@@ -178,8 +161,7 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* My Courses */}
-        {/* Courses + Instructors side-by-side */}
+        {/* Courses + Instructors */}
         <div className="courses-instructors-layout">
 
           {/* Left: My Courses */}
@@ -189,18 +171,16 @@ export default function StudentDashboard() {
               <span className="badge">In Progress</span>
               <h3>ROS 2 Training</h3>
               <p>
-                3-day comprehensive training on Architecture, Simulation, and Autonomy
-                implementation
+                3-day comprehensive training on Architecture, Simulation, and
+                Autonomy implementation
               </p>
 
               <div className="progress-section">
                 <div className="progress-labels">
                   <span>Progress</span>
-                  {/* UPDATED: Changed from 5 days to 3 days */}
                   <span>{completedDays} of 3 days</span>
                 </div>
                 <div className="progress-bar">
-                  {/* UPDATED: Changed math from /5 to /3 */}
                   <div
                     className="progress-fill"
                     style={{ width: `${(completedDays / 3) * 100}%` }}
@@ -222,12 +202,14 @@ export default function StudentDashboard() {
             <h2 className="section-title">Your Instructors</h2>
             <div className="instructors-stack">
               {[
-                { name: "Sheeram MV", initials: "SR", role: "Instructor", color: "blue" },
+                { name: "Sheeram MV",          initials: "SR", role: "Instructor", color: "blue"   },
                 { name: "Badrikanath Prahraj", initials: "BP", role: "Instructor", color: "purple" },
-                { name: "Abhishek S", initials: "AS", role: "Instructor", color: "green" },
+                { name: "Abhishek S",          initials: "AS", role: "Instructor", color: "green"  },
               ].map((inst) => (
                 <div className="instructor-row-card" key={inst.name}>
-                  <div className={`instructor-avatar ${inst.color}`}>{inst.initials}</div>
+                  <div className={`instructor-avatar ${inst.color}`}>
+                    {inst.initials}
+                  </div>
                   <div>
                     <h4>{inst.name}</h4>
                     <p>{inst.role}</p>
