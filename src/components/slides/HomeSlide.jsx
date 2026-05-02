@@ -7,7 +7,7 @@ const HomeSlide = ({ isVisible, onExploreClick }) => {
       <img src="/images/hero_robotics.png" alt="Hero Background" className="bg-image" />
       <div className="overlay-gradient"></div>
       <div className="content">
-        <div className="eyebrow">Technology Initiative</div>
+        <div className="eyebrow">Technology</div>
         <h1>CARE | CONSULT | <span>CONNECT</span></h1>
         <p className="desc">
           Connecting learners, innovators, and industry through practical
