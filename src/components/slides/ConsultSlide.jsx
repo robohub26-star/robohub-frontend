@@ -17,6 +17,15 @@ const ConsultSlide = ({ isVisible }) => {
           We support universities and organizations in establishing and
           operating cutting-edge AI & Robotics Centres of Excellence.
         </p>
+        
+        {/* UPDATED: Added future-lab-btn class for the custom popping effect */}
+        <button 
+          className="btn future-lab-btn" 
+          onClick={() => window.open('https://forms.gle/Df6xGQtYJaCyGdcA6', '_blank')}
+        >
+          Future Lab in Your Campus 🚀
+        </button>
+
         <div className="models-carousel">
           <div className="models-track">
             {allModels.map((model, idx) => (

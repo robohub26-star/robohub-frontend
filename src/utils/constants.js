@@ -59,9 +59,9 @@ export const courseData = [
   },
   {
     image: '/images/hero_robotics_1774087255432.png',
-    duration: '25-30 Hrs',
-    title: 'ROS2 Advanced Bootcamp',
-    description: 'Bridge the gap from simulation to hardware. Sensor integration and real robot workflows.'
+    duration: '30-36 Hrs',
+    title: 'Fundamentals of Robotics & AI',
+    description: 'Master the future of automation at the perfect intersection of robotics and AI.'
   },
   {
     image: '/images/care_training_1774087284054.png',
