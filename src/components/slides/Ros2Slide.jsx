@@ -49,9 +49,7 @@ const Ros2Slide = ({ isVisible }) => {
         {/* <p className="ros2-warning">
           ⚠️ Seats are limited — secure your spot now
         </p> */}
-        <button className="btn" onClick={() => window.open('https://forms.gle/3AGBd78VEqzgBgmt7')}>
-          More about Robohub 🚀
-        </button>
+        
         {/* <button className="btn" onClick={() => window.location.href = '/images/Poster.jpg'}>
           View Poster 📄
         </button> */}
