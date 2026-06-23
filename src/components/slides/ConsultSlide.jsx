@@ -14,7 +14,7 @@ const ConsultSlide = ({ isVisible }) => {
         <div className="eyebrow">Pillar 02 · Consult</div>
         <h1><span>ESTABLISHMENT</span></h1>
         <p className="desc">
-          We support universities and organizations in establishing and
+          We support Schools and Colleges in establishing and
           operating cutting-edge AI & Robotics Centres of Excellence.
         </p>
         
