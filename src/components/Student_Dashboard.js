@@ -169,10 +169,9 @@ export default function StudentDashboard() {
             <h2 className="section-title">My Courses</h2>
             <div className="course-progress-card">
               <span className="badge">In Progress</span>
-              <h3>ROS 2 Training</h3>
+              <h3>Fundamentals of Robotics & AI</h3>
               <p>
-                3-day comprehensive training on Architecture, Simulation, and
-                Autonomy implementation
+                This program bridges the gap between physical robotic hardware and AI software, teaching you to design, simulate, and deploy intelligent autonomous systems for real-world automation.
               </p>
 
               <div className="progress-section">
@@ -198,7 +197,7 @@ export default function StudentDashboard() {
           </div>
 
           {/* Right: Instructors */}
-          <div>
+          {/* <div>
             <h2 className="section-title">Your Instructors</h2>
             <div className="instructors-stack">
               {[
@@ -217,7 +216,7 @@ export default function StudentDashboard() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
         </div>
       </div>

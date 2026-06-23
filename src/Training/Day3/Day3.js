@@ -8,7 +8,6 @@ export default function Day3() {
   const navigate = useNavigate();
   const [completed, setCompleted] = useState(false);
 
-  // Load completion state from localStorage
   useEffect(() => {
     const fetchProgress = async () => {
       try {
@@ -38,9 +37,7 @@ export default function Day3() {
   }, []);
 
   const handleComplete = () => {
-    // Dispatch event to update progress in Dashboard/Training
     window.dispatchEvent(new Event("progressUpdate"));
-
     navigate("/courses/5g-training/day3/test");
   };
 
@@ -55,14 +52,10 @@ export default function Day3() {
           <div className="dashboard-nav-container">
             <nav className="dashboard-nav">
               <div className="logo-wrap">
-                {/* Ensure your logo image path is correct, matching Training.js */}
                 <img src="/images/Logo.png" alt="RoboHub Logo" />
               </div>
               <div className="dashboard-auth-buttons">
-                <button
-                  className="button-secondary"
-                  onClick={handleBackToCourse}
-                >
+                <button className="button-secondary" onClick={handleBackToCourse}>
                   <i className="fas fa-arrow-left"></i> Back To Course
                 </button>
               </div>
@@ -73,84 +66,64 @@ export default function Day3() {
 
       <div className="page-header">
         <span className="page-label">Day 3</span>
-        <h1>SLAM, <span>Navigation</span> & <span>TortoiseBot</span></h1>
+        <h1>Manipulator <span>Kinematics</span> & <span>Transformation</span></h1>
         <p className="page-subtitle">
-          Master environment mapping, autonomous navigation, and remote robot control
+          Learn the mathematical foundations of robotic motion, coordinate systems, and D-H parameters.
         </p>
       </div>
 
-      {/* Main Content */}
       <div className="main-container page-content">
-        {/* Content Block 1 */}
         <div className="content-card">
-          <h2>Learning Content</h2>
           <div className="content-details">
-            <h3>Simultaneous Localization and Mapping (SLAM)</h3>
+            <h3>Fundamentals of Kinematics</h3>
             <p>
-              SLAM allows a robot to build a map of an unknown environment while simultaneously keeping track of its own location within it.
+              Kinematics studies the motion of robots without considering the forces causing it. It is the core mathematical framework required to determine the position, orientation, and velocity of a robotic end-effector.
             </p>
-
-
-
             <ul>
-              <li>
-                <strong>Mapping + Localization:</strong> Solving the "chicken-and-egg" problem of navigating through unknown spaces.
-              </li>
-              <li>
-                <strong>/map topic:</strong> Publishes the generated Occupancy Grid representing walls, obstacles, and free space.
-              </li>
-              <li>
-                <strong>/scan topic:</strong> Provides the raw LiDAR point cloud data used to calculate distances to the environment.
-              </li>
+              <li><strong>Forward Kinematics:</strong> Given the joint angles, find the position and orientation of the end-effector.</li>
+              <li><strong>Inverse Kinematics:</strong> Given the desired end-effector position, calculate the necessary joint angles to reach it.</li>
             </ul>
-
-            <h3>Navigation (Nav2)</h3>
-            <p>
-              Nav2 is the standard navigation framework in ROS2, enabling a robot to autonomously move from a starting position to a target goal safely.
-            </p>
-
-
-
-            <ul>
-              <li>
-                <strong>Basic Flow:</strong> Goal → Planner → Controller → <code>cmd_vel</code>
-              </li>
-              <li>
-                <strong>Planner:</strong> Calculates the global, optimal path from start to finish based on the static map.
-              </li>
-              <li>
-                <strong>Controller:</strong> Executes local movements, avoiding dynamic obstacles in real-time to follow the path.
-              </li>
-              <li>
-                <strong>Recovery:</strong> Behaviors triggered when the robot gets stuck (e.g., spinning, backing up, clearing costmaps).
-              </li>
-            </ul>
-
-            <h3>TortoiseBot, Tools & Remote Access</h3>
-            <p>
-              Putting it all together involves running the TortoiseBot simulation and using powerful ROS2 tools to debug and control the system.
-            </p>
-
-
-
-            <ul>
-              <li>
-                <strong>Simulation & Teleop:</strong> Building the workspace, launching Gazebo via launch files, and controlling the robot manually using keyboard teleoperation.
-              </li>
-              <li>
-                <strong>RViz Visualization:</strong> Viewing the live map, real-time sensor data, and the robot's estimated position.
-              </li>
-              <li>
-                <strong>rqt_graph:</strong> A visual GUI tool that maps out active nodes to show exactly how data is flowing between topics.
-              </li>
-              <li>
-                <strong>SSH Concept:</strong> Using Secure Shell for remotely accessing and commanding the physical robot's onboard computer.
-              </li>
-            </ul>
+            
           </div>
         </div>
 
-        {/* Buttons */}
+        <div className="content-card">
+          <div className="content-details">
+            <h3>Coordinate Transformations</h3>
+            <p>
+              Robots exist in 3D space, requiring rigorous mathematical methods to describe how parts relate to each other:
+            </p>
+            <ul>
+              <li><strong>Rotation Matrices:</strong> Define the orientation of one coordinate frame relative to another.</li>
+              <li><strong>Homogeneous Transformation Matrix:</strong> A 4x4 matrix combining rotation and translation to represent complete spatial relationships.</li>
+            </ul>
+
+            <h3>Denavit–Hartenberg (D-H) Parameters</h3>
+            <p>
+              The D-H method is the industry standard for systematically assigning coordinate frames to each link of a serial manipulator. It simplifies the complex geometry of a robot into four parameters:
+            </p>
+            <ul>
+              <li><strong>Link length (a)</strong> and <strong>Link twist (α)</strong></li>
+              <li><strong>Link offset (d)</strong> and <strong>Joint angle (θ)</strong></li>
+            </ul>
+            
+          </div>
+        </div>
+
+        <div className="content-card">
+          <div className="content-details">
+            <h3>Differential Kinematics & Jacobian</h3>
+            <p>
+              While standard kinematics deals with positions, <strong>Differential Kinematics</strong> deals with velocities. The <strong>Jacobian Matrix</strong> is essential here, as it maps joint velocities to end-effector velocities.
+            </p>
+            <h3>Engineering Formulations</h3>
+            <div className="formula-box" style={{ backgroundColor: "#f8f9fa", padding: "15px", borderRadius: "6px", borderLeft: "4px solid #007bff" }}>
+              <p><strong>Rotation Matrix (2D):</strong> R = [[cosθ, -sinθ], [sinθ, cosθ]]</p>
+              <p><strong>Jacobian Relationship:</strong> v = J(q) · q̇</p>
+            </div>
+          </div>
+        </div>
+
         <div className="button-container">
           <button className="button button-primary" onClick={handleBackToCourse}>
             <i className="fas fa-arrow-left"></i> Back to Course

@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="footer-item">
             <i className="fas fa-envelope"></i>
             <p>
-              <a href="mailto:robohub26@gmail.com">robohub26@gmail.com</a>
+              <a href="mailto:ceo@robohub.org.in">ceo@robohub.org.in</a>
             </p>
           </div>
           <div className="footer-item">
@@ -33,6 +33,7 @@ const Footer = () => {
             <i className="fas fa-phone"></i>
             <p>
               <a href="tel:+917899770470">+91 78997 70470</a>
+              <a href="tel:+919003310312">+91 90033 10312</a>
             </p>
           </div>
         </div>

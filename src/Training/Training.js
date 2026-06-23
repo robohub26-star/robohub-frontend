@@ -118,7 +118,7 @@ export default function Training() {
 
       {/* Training Module Content */}
       <div className="training-container">
-        <h1 className="training-title">ROS 2 <span>Training</span> </h1>
+        <h1 className="training-title">Robotics and AI:<span> The Foundations</span> </h1>
         <p className="training-subtitle">
           Complete each day to unlock the next module
         </p>
@@ -154,7 +154,7 @@ export default function Training() {
               )}
             </div>
             <div className="day-info">
-              <strong>Day 1: Foundation of ROS2: Core Architecture, Communication, and Basic Control</strong>
+              <strong>Day 1: Introduction to Robotics</strong>
               <p>
                 {progress.dayCompleted >= 1 ? "Completed" : "Ready to start"}
               </p>
@@ -195,8 +195,8 @@ export default function Training() {
               <div className="day-info">
                 <strong>
                   {`Day ${day}: ${{
-                    2: "Virtualizing the Robot: Transform Frames, URDF Modeling, and Simulation",
-                    3: "Autonomy in Action: Mapping (SLAM), Navigation, and Remote Deployment"
+                    2: "Sensors , Drives and Grippers",
+                    3: "Kinematics of Manipulators"
                   }[day]
                     }`}
                 </strong>

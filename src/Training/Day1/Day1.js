@@ -77,9 +77,9 @@ export default function Day1() {
 
       <div className="page-header">
         <span className="page-label">Day 1</span>
-        <h1>4G to 5G <span>Evolution</span> & <span>Architecture</span> </h1>
+        <h1>Introduction to <span>Robotics</span> & <span>Anatomy</span> </h1>
         <p className="page-subtitle">
-          Learn about the transition from 4G to 5G and core concepts
+          Explore basic robotic configurations, industial specifications, and core performance parameters.
         </p>
       </div>
 
@@ -88,37 +88,31 @@ export default function Day1() {
         {/* Content Block 1 */}
         <div className="content-card">
           <div className="content-details">
-            <h3>Ubuntu & ROS2 Setup</h3>
+            <h3>Foudations of Robotics</h3>
             <p>
-              Mastering ROS2 begins with a solid foundation in Ubuntu Linux, the primary
-              operating system for ROS development. Setting up ROS2 involves configuring
-              your workspace, sourcing the environment, and understanding the core
-              middleware that enables robotic hardware and software to communicate.
+              A robot is a programmable electro-mechnical machine engineered to interact with the physical world using mechanical structures,actuators,sensors, and intelligent control systems. The study of robotics is highly interdisciplinary, merging mechanics, electronics,computer science and artificial intelligence.
             </p>
 
 
 
-            <h3>Core ROS2 Concepts</h3>
+            <h3>Geometrical Configurations (Anatomy)</h3>
             <ul>
               <li>
-                <strong>Nodes:</strong> Individual executable processes that perform
-                specific computing tasks (e.g., reading a sensor, controlling a motor).
+                <strong>Cartesian Robots:</strong> Operates across three mutually perpendicular linear axes (X, Y, Z) via prismatic joints, mapping out a box-shaped workspace with excellent positional accuracy.
               </li>
               <li>
-                <strong>Topics:</strong> Named channels or buses over which nodes
-                exchange messages and data.
+                <strong>SCARA Robots:</strong>Utilizing parallel rotary joints combined with vertical linear motion, these are ideal for high-speed, high-precision horizontal assembly .
               </li>
               <li>
-                <strong>Publisher / Subscriber:</strong> The primary communication
-                model where a node broadcasts data (Publisher) to a topic, and other
-                nodes listen to receive that data (Subscriber).
+                <strong>Articulated Robots:</strong>Mimicking the human arm with rotary joints, they possess 4 to 6 Degrees of Freedom (DOF), providing massive flexibility for complex tasks like welding and painting .
+              </li>
+              <li>
+                <strong>Parallel Robots:</strong> Employs multiple kinematic chains tracking simultaneously to an end effector, generating extreme stiffness, precision, and acceleration over small workspaces.
               </li>
             </ul>
-            <h3>System Architecture</h3>
+            <h3>Controlled Systems & Kinematic Chains</h3>
             <p>
-              Unlike a monolithic system, ROS2 uses a distributed architecture. Nodes
-              are decoupled and communicate asynchronously via topics, making the
-              robotic system highly modular, scalable, and fault-tolerant.
+              Manipulators are generally separated into <strong>Serial Manipulators</strong> (links connected sequentially from base to end effector, offering wider reach but accumulated joint errors) and <strong>Parallel Manipulators</strong> (multiple concurrent supports avoiding error stacking, maximizing rigidity) .
             </p>
           </div>
         </div>
@@ -126,35 +120,32 @@ export default function Day1() {
         {/* Content Block 2 */}
         <div className="content-card">
           <div className="content-details">
-            <h3>Hands-on with Turtlesim</h3>
+            <h3>Industrial Specifications</h3>
             <p>
-              Turtlesim is a lightweight 2D simulator built specifically for learning ROS2.
-              It provides a visual environment to practice starting nodes, mapping topics,
-              and understanding how data flows between different parts of a robotic system
-              by controlling a virtual turtle.
+              Evaluating a robotic system for deployment relies on core baseline metrics:
+              <strong> Degrees of Freedom (DOF)</strong> defining independent directional capabilities,
+              <strong> Workspace (Work Envelope)</strong> denoting operational limits, and
+              <strong> Payload Capacity</strong> specifying safe weight restrictions.
             </p>
-            <h3>Essential CLI Commands</h3>
+            <h3>Precision of Movement</h3>
             <ul>
               <li>
-                <strong>ros2 node list:</strong> Displays all currently running nodes
-                in the active ROS2 graph.
+                <strong>Resolution:</strong>The smallest measurable step increment that a robotic control system can execute or perceive.
               </li>
               <li>
-                <strong>ros2 topic list:</strong> Shows all active topics currently
-                available for publishing or subscribing.
+                <strong>Accuracy:</strong> The absolute margin of error between a target coordinate point and the actual position reached by the end effector.
               </li>
               <li>
-                <strong>ros2 topic echo:</strong> Prints the real-time data being
-                published to a specific topic straight to your terminal.
+                <strong>Repeatability:</strong> The ability of a robotic mechanism to consistently return to the exact same position under identical conditions across thousands of cycles.
               </li>
             </ul>
-            <h3>Understanding cmd_vel</h3>
-            <p>
-              The <code>cmd_vel</code> (command velocity) topic is a standard ROS2 interface
-              used across most mobile robots. It uses geometry messages to send linear
-              and angular velocity commands, telling the robot exactly how fast and in
-              what direction to move.
-            </p>
+            <h3>Core Engineering Formulations</h3>
+            <div className="formula-box" style={{ backgroundColor: "#f8f9fa", padding: "15px", borderRadius: "6px", margin: "15px 0", borderLeft: "4px solid #007bff" }}>
+              <p style={{ margin: "5px 0" }}><strong>Accuracy Error</strong> = | Desired Position – Actual Position |</p>
+              <p style={{ margin: "5px 0" }}><strong>Repeatability Error</strong> = | Repeated Position – Mean Position |</p>
+              <p style={{ margin: "5px 0" }}><strong>Resolution</strong> = Range of Motion / Number of Control Increments</p>
+              <p style={{ margin: "5px 0" }}><strong>Torque (τ)</strong> = Force (F) × Radius (r)</p>
+            </div>
           </div>
         </div>
 

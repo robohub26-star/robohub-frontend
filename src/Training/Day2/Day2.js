@@ -8,7 +8,7 @@ export default function Day2() {
   const navigate = useNavigate();
   const [completed, setCompleted] = useState(false);
 
-  // Load completion state from localStorage
+  // Load completion state from backend API for Day 2
   useEffect(() => {
     const fetchProgress = async () => {
       try {
@@ -40,7 +40,6 @@ export default function Day2() {
   const handleComplete = () => {
     // Dispatch event to update progress in Dashboard/Training
     window.dispatchEvent(new Event("progressUpdate"));
-
     navigate("/courses/5g-training/day2/test");
   };
 
@@ -50,12 +49,12 @@ export default function Day2() {
 
   return (
     <div className="page-container">
+      {/* Header / Navbar */}
       <div className="dashboard-header-wrapper">
         <header className="dashboard-header">
           <div className="dashboard-nav-container">
             <nav className="dashboard-nav">
               <div className="logo-wrap">
-                {/* Ensure your logo image path is correct, matching Training.js */}
                 <img src="/images/Logo.png" alt="RoboHub Logo" />
               </div>
               <div className="dashboard-auth-buttons">
@@ -71,94 +70,97 @@ export default function Day2() {
         </header>
       </div>
 
+      {/* Page Header */}
       <div className="page-header">
         <span className="page-label">Day 2</span>
-        <h1>Robot Structure, <span>TF</span> & <span>Simulation</span></h1>
+        <h1>Sensors, <span>Drives</span> & <span>Robotic Grippers</span></h1>
         <p className="page-subtitle">
-          Understand frame hierarchy, URDF modeling, and physics simulation
+          Master physical sensing devices, joint actuation systems, and end-effector gripper design.
         </p>
       </div>
 
       {/* Main Content */}
       <div className="main-container page-content">
-        {/* Content Block 1 */}
+        
+        {/* Content Block 1: Robotic Sensors & Characteristics */}
         <div className="content-card">
           <div className="content-details">
-            <h3>Robot Structure & Transform Frames (TF)</h3>
+            <h3>Introduction to Robotic Sensors</h3>
             <p>
-              Building upon basic ROS2 communication, we now introduce physical and spatial awareness. The TF (Transform) system is a core ROS2 concept used to keep track of multiple coordinate frames over time, calculating where different parts of the robot are relative to each other and the world.
+              Sensors translate environmental physical quantities into readable electrical signals, preventing robots from acting as blind, non-adaptive hardware systems. They enable closed-loop feedback crucial for perception, path adjustment, and local decision-making.
             </p>
             
-            
-
-            <h3>Understanding Frame Hierarchy</h3>
+            <h3>Sensor Classifications</h3>
             <ul>
               <li>
-                <strong>map:</strong> The fixed, global coordinate frame of the environment.
+                <strong>Internal Sensors:</strong> Measure state parameters of the robot itself. Examples include potentiometers, encoders, and LVDTs for mapping joint position, alongside tachometers for managing velocity feedback.
               </li>
               <li>
-                <strong>odom (Odometry):</strong> A local coordinate frame representing the robot's starting position, subject to sensor drift over time as the robot moves.
-              </li>
-              <li>
-                <strong>base_link:</strong> The main reference point representing the physical center or chassis of the robot.
-              </li>
-              <li>
-                <strong>sensors:</strong> Frames attached to the <code>base_link</code> representing exactly where hardware (like a LiDAR scanner) is mounted.
+                <strong>External Sensors:</strong> Monitor the external surroundings. This group encompasses non-contact proximity sensors (inductive, capacitive, ultrasonic, infrared), tactile touch arrays, and force or torque wrist assemblies.
               </li>
             </ul>
-            <h3>URDF (Unified Robot Description Format)</h3>
+
+            <h3>Sensing Device Performance Characteristics</h3>
             <p>
-              URDF is an XML format used to define the physical structure of a robot so it can be simulated and visualized. It consists of:
+              Deploying industrial sensors requires matching the operating domain against critical operational behaviors:
             </p>
             <ul>
               <li>
-                <strong>Links:</strong> The rigid physical parts of the robot (e.g., wheels, chassis, camera mount).
+                <strong>Range & Sensitivity:</strong> Range determines operational boundary limits (max/min boundaries). Sensitivity establishes the ratio matching change in sensor output against changes in input parameters.
               </li>
               <li>
-                <strong>Joints:</strong> The dynamic connections between links that dictate how they move relative to each other (e.g., continuous, revolute, or fixed).
+                <strong>Precision Metrics:</strong> Encompasses absolute accuracy (closeness to truth values), resolution (minimal readable step size change), and repeatability (consistency across looping trials).
+              </li>
+              <li>
+                <strong>Signal Alterations:</strong> Systems must monitor performance limitations like response time delays, signal drift trends over prolonged usage, and unwanted environmental noise interference.
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Content Block 2 */}
+        {/* Content Block 2: Actuation Drives & End-Effector Grippers */}
         <div className="content-card">
           <div className="content-details">
-            <h3>Visualization in RViz</h3>
+            <h3>Robotic Drive Systems</h3>
             <p>
-              RViz is a powerful 3D visualization tool for the ROS framework. It does not simulate physics; instead, it visually represents the data streaming over topics to show you exactly what the robot "sees" and "thinks".
+              Drives generate localized joint movement. Selecting a configuration directly reshapes overall payload threshold capabilities, speed ceilings, and path consistency:
             </p>
-
-            
-
             <ul>
               <li>
-                <strong>RobotModel:</strong> Renders the visual and collision geometry of the robot based directly on its URDF file.
+                <strong>Electric Drives:</strong> Utilize electric servo/stepper motors. Favored in assembly environments due to excellent precision scaling, quiet operation profiles, and simple controller loop structures.
               </li>
               <li>
-                <strong>LaserScan (/scan):</strong> Visualizes 2D LiDAR data as points or lines, indicating obstacles currently detected by the robot's sensors.
+                <strong>Hydraulic Drives:</strong> Driven via pressurized fluid systems. Ideal for massive payload handling demands despite baseline fluid containment leakage issues and intensive hardware service schedules.
+              </li>
+              <li>
+                <strong>Pneumatic Drives:</strong> Dependent on compressed air delivery. Offers rapid actuation cycles and low acquisition barriers, though limited by lower absolute position precision thresholds.
               </li>
             </ul>
 
-            <h3>Introduction to Gazebo Simulation</h3>
+            <h3>Mechanical Grippers & End Effectors</h3>
             <p>
-              Gazebo is a robust 3D physics simulator. Unlike RViz, Gazebo creates a virtual world where gravity, friction, momentum, and collisions act upon your robot model just like they would in reality.
+              Grippers function directly as a robot's hands to handle objects securely. Industrial solutions scale across distinct mechanical architectures:
             </p>
-
-            
-
             <ul>
               <li>
-                <strong>Running in Simulation:</strong> The process of spawning your URDF robot model into a Gazebo world and commanding it via topics like <code>cmd_vel</code>.
+                <strong>Mechanical Fingers:</strong> Utilize targeted mechanical linkages (2-finger, 3-finger, or multi-jointed variants) using active actuation to grasp geometric shapes.
               </li>
               <li>
-                <strong>Environment & Physics:</strong> Understanding how simulated sensors interact with virtual walls, lighting, obstacles, and physical constraints.
+                <strong>Magnetic & Vacuum Grippers:</strong> Magnetic types streamline sheet metal manipulation tasks for ferromagnetic workpieces. Vacuum cup mechanisms use active atmospheric suction distribution to lift smooth, flat, or highly fragile workpieces.
               </li>
             </ul>
+
+            <h3>Core Engineering Formulations</h3>
+            <div className="formula-box" style={{ backgroundColor: "#f8f9fa", padding: "15px", borderRadius: "6px", margin: "15px 0", borderLeft: "4px solid #28a745" }}>
+              <p style={{ margin: "5px 0" }}><strong>Sensor Range</strong> = Maximum Measurable Value − Minimum Measurable Value</p>
+              <p style={{ margin: "5px 0" }}><strong>Sensitivity</strong> = Δ Output / Δ Input</p>
+              <p style={{ margin: "5px 0" }}><strong>Accuracy Error</strong> = | True Value − Measured Value |</p>
+              <p style={{ margin: "5px 0" }}><strong>Grasping Force (F_g)</strong> = Weight (W) / Friction Coefficient (μ)</p>
+            </div>
           </div>
         </div>
 
-        {/* Buttons (Preserved from original code) */}
+        {/* Action Buttons */}
         <div className="button-container">
           <button
             className="button button-primary"

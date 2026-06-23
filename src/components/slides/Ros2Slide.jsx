@@ -9,7 +9,7 @@ const Ros2Slide = ({ isVisible }) => {
         <div className="eyebrow">Fundamentals of Robotics & AI</div>
         <h1>UPCOMING <span>Activity</span></h1>
         <p className="desc">
-          This 36-hour program delivers a deep dive into the synergy between robotic hardware and
+          The course module  delivers a deep dive into the synergy between robotic hardware and
           intelligent software. Students start with the essentials of <strong>sensors, drivers, and
             specialized grippers</strong>, moving quickly into the complex <strong>kinematics of
               manipulators</strong> to master precise motion control. The course then shifts to the
