@@ -4,59 +4,27 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Dashboard.css";
 import API_BASE_URL from "../config";
 
+const COLAB_NOTEBOOK_URL =
+  "https://colab.research.google.com/drive/18gHeTN2KlLxKUAYttVF8DhXbKeWL654J?usp=sharing";
+
 export default function StudentDashboard() {
   const navigate = useNavigate();
 
   const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [completedDays, setCompletedDays] = useState(0);
-  const [testsPassed, setTestsPassed] = useState(0);
-  const [averageScore, setAverageScore] = useState("0%");
-  const [progress, setProgress] = useState({});
-  const [fullName, setFullName] = useState(
+  const [fullName] = useState(
     sessionStorage.getItem("fullName") || "Student"
   );
 
   useEffect(() => {
-    const fetchProgressData = async () => {
-      const authToken = sessionStorage.getItem("token") || token;
-
-      if (!authToken) {
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const res = await fetch(`${API_BASE_URL}/progress/progress`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-
-        if (res.status === 401 || res.status === 403) {
-          navigate("/login");
-          return;
-        }
-
-        const data = await res.json();
-
-        setProgress(data.progress || {});
-        setCompletedDays(data.completedDays || 0);
-        setTestsPassed(data.testsPassed || 0);
-        setAverageScore(data.averageScore || "0%");
-        if (data.fullName) setFullName(data.fullName);
-      } catch (err) {
-        console.error("Failed to fetch progress:", err);
-      }
-    };
-
-    fetchProgressData();
-
-    const handler = () => fetchProgressData();
-    window.addEventListener("progressUpdate", handler);
-    return () => window.removeEventListener("progressUpdate", handler);
+    const authToken = sessionStorage.getItem("token") || token;
+    if (!authToken) {
+      navigate("/login");
+    }
   }, [navigate, token]);
+
+  const handleOpenNotebook = () => {
+    window.open(COLAB_NOTEBOOK_URL, "_blank", "noopener,noreferrer");
+  };
 
   const handleLogout = async () => {
     const authToken = sessionStorage.getItem("token") || token;
@@ -84,7 +52,6 @@ export default function StudentDashboard() {
 
   return (
     <div className="dashboard-page-wrapper">
-
       {/* Navbar */}
       <div className="dashboard-header-wrapper">
         <header className="dashboard-header">
@@ -108,116 +75,24 @@ export default function StudentDashboard() {
       {/* Dashboard Content */}
       <div className="dashboard-container">
         <h1 className="dashboard-title">
-          Student <span>Dashboard</span>
+          Robotics <span>Essentials</span>
         </h1>
         <p className="dashboard-subtitle">
-          Track your progress and continue learning
+          A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation
         </p>
 
-        {/* Stats Cards */}
-        <div className="stats-grid">
-          <div className="stat-card blue">
-            <i className="fas fa-book stat-icon"></i>
-            <div className="stat-text">
-              <h2>1</h2>
-              <p>Enrolled Courses</p>
-            </div>
-          </div>
-
-          <div className="stat-card green">
-            <i className="fas fa-trophy stat-icon"></i>
-            <div className="stat-text">
-              <h2>{testsPassed}</h2>
-              <p>Tests Completed</p>
-            </div>
-          </div>
-
-          <div className="stat-card purple">
-            <i className="fas fa-award stat-icon"></i>
-            <div className="stat-text">
-              <h2>{averageScore}</h2>
-              <p>Average Score</p>
-            </div>
-          </div>
-
-          <div className="stat-card orange">
-            <i className="fas fa-bolt stat-icon"></i>
-            <div className="stat-text">
-              <div style={{ maxHeight: "70px", overflowY: "auto" }}>
-                {Object.entries(progress).map(([day, info]) => (
-                  <div key={day} style={{ display: "inline-block", width: "100%" }}>
-                    <h3 style={{ display: "inline-block", marginRight: "20px" }}>
-                      Day {day}:
-                    </h3>
-                    <div style={{ display: "inline-block", position: "relative", top: "8px" }}>
-                      <p>Status: {info.completed ? "Completed" : "Pending"}</p>
-                      <p>Score: {info.completed ? `${info.score}` : "-"}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p>Daily Score</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Courses + Instructors */}
-        <div className="courses-instructors-layout">
-
-          {/* Left: My Courses */}
-          <div>
-            <h2 className="section-title">My Courses</h2>
-            <div className="course-progress-card">
-              <span className="badge">In Progress</span>
-              <h3>Fundamentals of Robotics & AI</h3>
-              <p>
-                This program bridges the gap between physical robotic hardware and AI software, teaching you to design, simulate, and deploy intelligent autonomous systems for real-world automation.
-              </p>
-
-              <div className="progress-section">
-                <div className="progress-labels">
-                  <span>Progress</span>
-                  <span>{completedDays} of 3 days</span>
-                </div>
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{ width: `${(completedDays / 3) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <button
-                className="primary-btn"
-                onClick={() => navigate("/courses/5g-training")}
-              >
-                Start Assessment →
-              </button>
-            </div>
-          </div>
-
-          {/* Right: Instructors */}
-          {/* <div>
-            <h2 className="section-title">Your Instructors</h2>
-            <div className="instructors-stack">
-              {[
-                { name: "Sheeram MV",          initials: "SR", role: "Instructor", color: "blue"   },
-                { name: "Badrikanath Prahraj", initials: "BP", role: "Instructor", color: "purple" },
-                { name: "Abhishek S",          initials: "AS", role: "Instructor", color: "green"  },
-              ].map((inst) => (
-                <div className="instructor-row-card" key={inst.name}>
-                  <div className={`instructor-avatar ${inst.color}`}>
-                    {inst.initials}
-                  </div>
-                  <div>
-                    <h4>{inst.name}</h4>
-                    <p>{inst.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div> */}
-
+        {/* Notebook Card */}
+        <div className="course-progress-card" style={{ maxWidth: "600px", margin: "0 auto 24px" }}>
+          <span className="badge">Lab</span>
+          <h3>Fundamental of Robotics</h3>
+          <p>
+            Click below to open your notebook in a new tab. Complete the
+            exercises there at your own pace.
+          </p>
+          <button className="primary-btn" onClick={handleOpenNotebook}>
+            <i className="fas fa-external-link-alt" style={{ marginRight: "8px" }}></i>
+            Open Notebook
+          </button>
         </div>
       </div>
     </div>

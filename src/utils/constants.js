@@ -6,6 +6,38 @@ export const navItems = [
   { id: 'slide-courses', label: 'Modules' }
 ];
 
+export const eventData = [
+  {
+    type: 'Workshop',
+    title: 'Robotics Essentials',
+    description:
+      'A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation.',
+    dates: 'July 2026',
+    venue: 'University of Buraimi, Oman',
+    mode: 'Online',
+  },
+  {
+    type: 'Course',
+    title: 'Fundamentals of Robotics & AI',
+    description:
+      'A full course covering robotic hardware, AI fundamentals, and simulation-driven automation.',
+    dates: 'July 2026',
+    venue: 'MIT, MAHE – Yelahanka Campus',
+    mode: 'Onsite',
+  },
+ 
+  {
+    type: 'Workshop',
+    title: 'Robotics Essentials',
+    description:
+      'A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation.',
+    dates: 'July 2026',
+    venue: 'Christ University, Bangalore',
+    mode: 'Offline',
+  },
+  
+];
+
 export const modelData = [
   {
     tag: 'ENABLE',

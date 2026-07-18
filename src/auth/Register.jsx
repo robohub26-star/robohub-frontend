@@ -26,6 +26,10 @@ export default function Register() {
     email: "",
     phone: "",
     extra: "",
+    category: "",
+    mode: "",
+    gender: "",
+    studentsCount: "",
     password: "",
     confirmPassword: "",
   });
@@ -298,6 +302,73 @@ export default function Register() {
                       required
                     />
                   </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="input-group">
+                    <label>Organisation</label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select category
+                      </option>
+                      <option value="College">University of Buraimi,Oman</option>
+                      <option value="College">Christ University, Bangalore</option>
+                      
+                    </select>
+                  </div>
+                  <div className="input-group">
+                    <label>Mode</label>
+                    <select
+                      name="mode"
+                      value={formData.mode}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select mode
+                      </option>
+                      <option value="Online">Online</option>
+                      <option value="Offline">Offline</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="input-group">
+                    <label>Gender</label>
+                    <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select gender
+                      </option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  {role === "mentor" && (
+                    <div className="input-group">
+                      <label>Number of Students</label>
+                      <input
+                        type="number"
+                        name="studentsCount"
+                        min="0"
+                        placeholder="e.g. 30"
+                        value={formData.studentsCount}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="form-row">
