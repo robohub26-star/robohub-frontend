@@ -9,10 +9,10 @@ export const navItems = [
 export const eventData = [
   {
     type: 'Workshop',
-    title: 'Robotics Essentials',
+    title: 'Faculty Development Workshop: Robotics Essentials',
     description:
-      'A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation.',
-    dates: 'July 2026',
+      'A 3-Hour immersive workshop introducing robotics concepts using virtual simulation platforms,Explore robot kinematics, sensing, control, and autonomous systems to integrate robotics into academic programs. ',
+    dates: 'July 20 21&, 2026',
     venue: 'University of Buraimi, Oman',
     mode: 'Online',
   },
@@ -23,17 +23,17 @@ export const eventData = [
       'A full course covering robotic hardware, AI fundamentals, and simulation-driven automation.',
     dates: 'July 2026',
     venue: 'MIT, MAHE – Yelahanka Campus',
-    mode: 'Onsite',
+    mode: 'On-site',
   },
  
   {
     type: 'Workshop',
-    title: 'Robotics Essentials',
+    title: 'Robotics Foundations: Empowering Women in Technology',
     description:
-      'A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation.',
-    dates: 'July 2026',
+      'A beginner-friendly 3-hour workshop designed to introduce robotics through virtual simulation.Gain practical insights into robot operation, autonomous systems, and emerging career opportunities in robotics.',
+    dates: 'July  24th 2026',
     venue: 'Christ University, Bangalore',
-    mode: 'Offline',
+    mode: 'On-site',
   },
   
 ];
