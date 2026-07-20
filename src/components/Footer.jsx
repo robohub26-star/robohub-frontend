@@ -37,7 +37,7 @@ const Footer = () => {
             <i className="fab fa-whatsapp"></i>
             <p>
               <a
-                href="https://chat.whatsapp.com/Co5LRIi0JhTGWUXOmH2TfH?s=sw&p=i&ilr=4&amv=2"
+                href="https://chat.whatsapp.com/G8EPbSnCJdu6tIfr0mRcl3?s=sh&p=i&ilr=4&amv=2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
