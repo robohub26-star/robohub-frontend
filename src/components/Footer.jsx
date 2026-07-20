@@ -32,15 +32,16 @@ const Footer = () => {
             </p>
           </div>
           
-          {/* Box 3: Phone (Forced to 300px width) */}
+          {/* Box 3: WhatsApp (Forced to 300px width) */}
           <div className="footer-item" style={{ width: '300px' }}>
-            <i className="fas fa-phone"></i>
+            <i className="fab fa-whatsapp"></i>
             <p>
-              <a href="tel:+917899770470" style={{ display: 'block', marginBottom: '8px' }}>
-                +91 78997 70470
-              </a>
-              <a href="tel:+919003310312" style={{ display: 'block' }}>
-                +91 90033 10312
+              <a
+                href="https://chat.whatsapp.com/Co5LRIi0JhTGWUXOmH2TfH?s=sw&p=i&ilr=4&amv=2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp
               </a>
             </p>
           </div>
