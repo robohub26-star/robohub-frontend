@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Login.css";
@@ -19,7 +19,7 @@ export default function Login({ setToken }) {
   const [showMentorToggle, setShowMentorToggle] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [, setTapCount] = useState(0);
-  const tapTimerRef = React.useRef(null);
+  const tapTimerRef = useRef(null);
 
   const [toast, setToast] = useState({ message: "", type: "" });
   const [showToast, setShowToast] = useState(false);
@@ -104,10 +104,30 @@ export default function Login({ setToken }) {
         );
 
         if (setToken) setToken(data.token);
+
+        // Explicit boolean evaluation
+        const canDownloadBool =
+          data.canDownloadCertificate === true ||
+          String(data.canDownloadCertificate).toLowerCase() === "true";
+
+        const flagString = canDownloadBool ? "true" : "false";
+
+        // Wipe old session before setting new student credentials
+        sessionStorage.clear();
+        localStorage.clear();
+
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("role", data.role || role);
-        if (data.fullName) sessionStorage.setItem("fullName", data.fullName);
+        sessionStorage.setItem("canDownloadCertificate", flagString);
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("canDownloadCertificate", flagString);
         localStorage.setItem("user", JSON.stringify(data));
+
+        if (data.fullName) {
+          sessionStorage.setItem("fullName", data.fullName);
+          localStorage.setItem("fullName", data.fullName);
+        }
 
         setTimeout(() => {
           setShowToast(false);
@@ -116,7 +136,7 @@ export default function Login({ setToken }) {
           } else {
             navigate("/dashboard/student");
           }
-        }, 1500);
+        }, 800);
       } else {
         showNotification("Login failed: No token received", "error");
       }
