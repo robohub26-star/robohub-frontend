@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Register.css";
@@ -8,7 +8,6 @@ export default function Register() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if mentor mode is activated via URL parameter
   const queryParams = new URLSearchParams(location.search);
   const isMentorMode =
     queryParams.get("mode") === "mentor" || queryParams.get("admin") === "true";
@@ -19,7 +18,7 @@ export default function Register() {
   const [adminSecret, setAdminSecret] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [, setTapCount] = useState(0);
-  const tapTimerRef = React.useRef(null);
+  const tapTimerRef = useRef(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -38,17 +37,20 @@ export default function Register() {
 
   const showNotification = (msg, type) => {
     setToast({ message: msg, type, show: true });
-    setTimeout(() => setToast({ ...toast, show: false }), 3000);
+    setTimeout(() => {
+      setToast((prev) => ({ ...prev, show: false }));
+    }, 3000);
   };
 
-  // Handle logo tap detection (5 taps to unlock) - Mobile only
-  const handleLogoTap = () => {
-    // Check if device is mobile/touch-enabled
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                     ('ontouchstart' in window) ||
-                     (window.innerWidth <= 768 && window.innerHeight <= 1024);
+  const isMobileDevice = () =>
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) ||
+    "ontouchstart" in window ||
+    (window.innerWidth <= 768 && window.innerHeight <= 1024);
 
-    if (!isMobile) return; // Only work on mobile devices
+  const handleLogoTap = () => {
+    if (!isMobileDevice()) return;
 
     setTapCount((prevCount) => {
       const newCount = prevCount + 1;
@@ -56,11 +58,9 @@ export default function Register() {
       if (newCount === 5) {
         setShowMentorOption(true);
         showNotification("Mentor mode unlocked", "success");
-        setTapCount(0);
         return 0;
       }
 
-      // Reset tap count after 2 seconds of inactivity
       if (tapTimerRef.current) clearTimeout(tapTimerRef.current);
       tapTimerRef.current = setTimeout(() => {
         setTapCount(0);
@@ -70,7 +70,6 @@ export default function Register() {
     });
   };
 
-  // Secret key combination (Ctrl + Shift + R)
   useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === "R") {
@@ -82,9 +81,8 @@ export default function Register() {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  });
+  }, []);
 
-  // Cleanup timer on unmount
   useEffect(() => {
     return () => {
       if (tapTimerRef.current) clearTimeout(tapTimerRef.current);
@@ -145,7 +143,6 @@ export default function Register() {
       return;
     }
 
-    // Student registration
     setIsSubmitting(true);
 
     const payload = {
@@ -189,24 +186,22 @@ export default function Register() {
       )}
 
       <header className="register-hero-section">
-          <nav className="register-nav">
-            <div
-              className="logo-wrap"
-              onClick={handleLogoTap}
-              style={{
-                cursor: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                        ('ontouchstart' in window) ||
-                        (window.innerWidth <= 768 && window.innerHeight <= 1024) ? 'pointer' : 'default'
-              }}
-            >
-              <img src="/images/Logo.png" alt="RoboHub Logo" />
-            </div>
-            <div className="auth-buttons">
-              <button className="btn-back-home" onClick={() => navigate("/")}>
-                <i className="fas fa-arrow-left"></i> <span>Home</span>
-              </button>
-            </div>
-          </nav>
+        <nav className="register-nav">
+          <div
+            className="logo-wrap"
+            onClick={handleLogoTap}
+            style={{
+              cursor: isMobileDevice() ? "pointer" : "default",
+            }}
+          >
+            <img src="/images/Logo.png" alt="RoboHub Logo" />
+          </div>
+          <div className="auth-buttons">
+            <button className="btn-back-home" onClick={() => navigate("/")}>
+              <i className="fas fa-arrow-left"></i> <span>Home</span>
+            </button>
+          </div>
+        </nav>
       </header>
 
       <section className="register-main-section">
@@ -219,7 +214,6 @@ export default function Register() {
               <div className="role-selection-grid">
                 <h3 className="role-heading">I want to join as a:</h3>
 
-                {/* Student option - Always visible */}
                 <div className="role-option" onClick={() => setRole("student")}>
                   <div className="icon-wrapper">
                     <i className="fas fa-user-graduate"></i>
@@ -230,7 +224,6 @@ export default function Register() {
                   </div>
                 </div>
 
-                {/* Mentor option - Hidden by default, shows with secret combo or URL param */}
                 {(showMentorOption || isMentorMode) && (
                   <div
                     className="role-option mentor-option"
@@ -316,10 +309,14 @@ export default function Register() {
                       <option value="" disabled>
                         Select category
                       </option>
-                      <option value="College">MAHE Bangalore</option>
-                      <option value="College">University of Buraimi,Oman</option>
-                      <option value="College">Christ University, Bangalore</option>
-                      
+                      {/* Fixed values to match corresponding text */}
+                      <option value="MAHE Bangalore">MAHE Bangalore</option>
+                      <option value="University of Buraimi,Oman">
+                        University of Buraimi,Oman
+                      </option>
+                      <option value="Christ University, Bangalore">
+                        Christ University, Bangalore
+                      </option>
                     </select>
                   </div>
                   <div className="input-group">
@@ -403,15 +400,14 @@ export default function Register() {
                   >
                     <i className="fas fa-arrow-left"></i> Back
                   </button>
-                  <button type="submit" className="btn-submit">
-                    Create Account
+                  <button type="submit" className="btn-submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Create Account"}
                   </button>
                 </div>
               </form>
             )}
           </div>
 
-          {/* Admin Secret Modal */}
           {showSecretModal && (
             <div className="secret-modal-overlay">
               <div className="secret-modal">

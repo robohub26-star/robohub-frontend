@@ -4,10 +4,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Dashboard.css";
 import API_BASE_URL from "../config";
 
-const KINEMATICS_NOTEBOOK_URL =
-  "https://drive.google.com/drive/folders/1o3Ur9XFs6NihuzqvxCJi2vyRz6wqbpoM?usp=sharing";
 const COLAB_NOTEBOOK_URL =
   "https://colab.research.google.com/drive/18gHeTN2KlLxKUAYttVF8DhXbKeWL654J?usp=sharing";
+
+const KINEMATICS_NOTEBOOK_URL =
+  "https://drive.google.com/drive/folders/1o3Ur9XFs6NihuzqvxCJi2vyRz6wqbpoM?usp=sharing";
 
 const CERTIFICATE_URL =
   "https://drive.google.com/drive/folders/1Nwx6cKbT1SW-bmxYkYIQoHIBDkJPg_ns?usp=drive_link";
@@ -26,7 +27,6 @@ export default function StudentDashboard() {
       "Student"
   );
 
-  // Require explicit string "true" to render certificate
   const [canDownloadCertificate, setCanDownloadCertificate] = useState(() => {
     const certSession = sessionStorage.getItem("canDownloadCertificate");
     const certLocal = localStorage.getItem("canDownloadCertificate");
@@ -55,6 +55,10 @@ export default function StudentDashboard() {
 
   const handleOpenNotebook = () => {
     window.open(COLAB_NOTEBOOK_URL, "_blank", "noopener,noreferrer");
+  };
+
+  const handleOpenKinematics = () => {
+    window.open(KINEMATICS_NOTEBOOK_URL, "_blank", "noopener,noreferrer");
   };
 
   const handleOpenCertificate = () => {
@@ -119,27 +123,56 @@ export default function StudentDashboard() {
           5 Hours Curriculum-Tailored Course on Robotics Kinematics with Interactive Widgets
         </p>
 
-        {/* Notebook Card (Visible to ALL logged-in students) */}
+        {/* Notebook Card 1: Fundamentals */}
         <div
           className="course-progress-card"
           style={{ maxWidth: "600px", margin: "0 auto 24px" }}
         >
-          <span className="badge">Lab</span>
-          <h3>Kinematics of Manipulators</h3>
+          <span className="badge">Lab 1</span>
+          <h3>Fundamental of Robotics</h3>
           <p>
-            Click below to open your notebook in a new tab. Complete the
-            exercises there at your own pace.
+            Click below to open your introductory notebook in Google Colab.
+            Complete the exercises at your own pace.
           </p>
           <button className="primary-btn" onClick={handleOpenNotebook}>
             <i
               className="fas fa-external-link-alt"
               style={{ marginRight: "8px" }}
             ></i>
-            Open Notebook
+            Open Colab Notebook
           </button>
         </div>
 
-        {/* Certificate Card (ONLY visible if canDownloadCertificate is TRUE) */}
+        {/* Notebook Card 2: Kinematics of Manipulators */}
+        <div
+          className="course-progress-card"
+          style={{ maxWidth: "600px", margin: "0 auto 24px" }}
+        >
+          <span
+            className="badge"
+            style={{ backgroundColor: "#e0f2fe", color: "#0369a1" }}
+          >
+            Lab 2
+          </span>
+          <h3>Kinematics of Manipulators</h3>
+          <p>
+            Click below to open the Google Drive folder containing the Kinematics
+            notebooks and course materials.
+          </p>
+          <button
+            className="primary-btn"
+            onClick={handleOpenKinematics}
+            style={{ backgroundColor: "#0284c7", borderColor: "#0284c7" }}
+          >
+            <i
+              className="fas fa-external-link-alt"
+              style={{ marginRight: "8px" }}
+            ></i>
+            Open Kinematics Folder
+          </button>
+        </div>
+
+        {/* Certificate Card (ONLY visible if allowed in MongoDB) */}
         {canDownloadCertificate && (
           <div
             className="course-progress-card"
