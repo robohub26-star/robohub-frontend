@@ -316,6 +316,7 @@ export default function Register() {
                       <option value="" disabled>
                         Select category
                       </option>
+                      <option value="College">MAHE Bangalore</option>
                       <option value="College">University of Buraimi,Oman</option>
                       <option value="College">Christ University, Bangalore</option>
                       

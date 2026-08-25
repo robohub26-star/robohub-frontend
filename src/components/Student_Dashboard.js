@@ -4,6 +4,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Dashboard.css";
 import API_BASE_URL from "../config";
 
+const KINEMATICS_NOTEBOOK_URL =
+  "https://drive.google.com/drive/folders/1o3Ur9XFs6NihuzqvxCJi2vyRz6wqbpoM?usp=sharing";
 const COLAB_NOTEBOOK_URL =
   "https://colab.research.google.com/drive/18gHeTN2KlLxKUAYttVF8DhXbKeWL654J?usp=sharing";
 
@@ -111,10 +113,10 @@ export default function StudentDashboard() {
       {/* Dashboard Content */}
       <div className="dashboard-container">
         <h1 className="dashboard-title">
-          Robotics <span>Essentials</span>
+          Kinematics <span>of Manipulators</span>
         </h1>
         <p className="dashboard-subtitle">
-          A 3-Hour Workshop on Understanding Fundamentals Through Virtual Simulation
+          5 Hours Curriculum-Tailored Course on Robotics Kinematics with Interactive Widgets
         </p>
 
         {/* Notebook Card (Visible to ALL logged-in students) */}
@@ -123,7 +125,7 @@ export default function StudentDashboard() {
           style={{ maxWidth: "600px", margin: "0 auto 24px" }}
         >
           <span className="badge">Lab</span>
-          <h3>Fundamental of Robotics</h3>
+          <h3>Kinematics of Manipulators</h3>
           <p>
             Click below to open your notebook in a new tab. Complete the
             exercises there at your own pace.
