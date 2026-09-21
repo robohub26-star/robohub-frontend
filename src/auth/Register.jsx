@@ -310,6 +310,7 @@ export default function Register() {
                         Select category
                       </option>
                       {/* Fixed values to match corresponding text */}
+                      <option value="Connected Robotics Systems">Connected Robotics Systems</option>
                       <option value="MAHE Bangalore">MAHE Bangalore</option>
                       <option value="University of Buraimi,Oman">
                         University of Buraimi,Oman
